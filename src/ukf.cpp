@@ -134,6 +134,8 @@ void UKF::Prediction(double delta_t) {
 	// augmented mean state
 	x_aug.fill(0.0);
 	x_aug.head(n_x_) = x_;
+  x_aug(5) = 0;
+  x_aug(6) = 0;
 
 	// augmented covariance matrix
 	P_aug.fill(0.0);
@@ -252,7 +254,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
 	P_ -= K * S * K.transpose();
 
 	float NIS = z_diff.transpose() * S_I * z_diff;
-	//cout << "Laser NIS: " << NIS << endl;
+	cout << "Laser NIS: " << NIS << endl;
 
 }
 
@@ -320,7 +322,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
 	P_ -= K * S * K.transpose();
 
 	float NIS = z_diff.transpose() * S_I * z_diff;
-	//cout << "Radar NIS: " << NIS << endl;
+	cout << "Radar NIS: " << NIS << endl;
 }
 
 void UKF::NormalizeAngle(double& phi){
